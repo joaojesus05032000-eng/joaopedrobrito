@@ -1,0 +1,48 @@
+name: Pipeline de Integração Contínua (CI)
+
+#gatilhos :dispara o pipeline em pushes e pull requests na branch principal
+
+on:
+  push:
+    branches: ["main", "master"]
+  pull_request:
+    branches: ["main", "master"]
+jobs:
+   testes-evalidação:
+   #define o sistema operacional do runner(maquina virtual)
+     runs-on: ubuntu-latest
+
+   steps:
+    #step 1: baixa o codigo do reporsitorio para o runner
+
+      - name: Baixar Código-Fonte
+        uses: actions/checkout@v4
+
+    #step 2: Configura o ambiente do Node.js
+
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+    #step 3: Instala as dependencias de forma consistente com o package-lock.json
+
+      - name: Instalar Dependências
+        run: npm ci
+
+    #step 4: analise estatica com linter
+
+      - name: Exucutar Linter
+        run: npm run lint
+
+    #step 5:testes unitarios
+
+      - name: Exucutar testes Automatizados
+        run: npm test
+
+    #step 6: analise estatica de segurança basica (SAST)
+
+      - name: Verificação de segurança de dependencias (SAST)
+        run: npm audit --audit-level=high
+
