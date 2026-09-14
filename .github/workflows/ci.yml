@@ -9,7 +9,7 @@ on:
     branches: ["main", "master"]
 
 jobs:
-  testes-e-validação:
+  testes-e-validacao:
     # Define o sistema operacional do runner (máquina virtual)
     runs-on: ubuntu-latest
 
