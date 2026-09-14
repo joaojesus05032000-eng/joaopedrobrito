@@ -8,7 +8,7 @@ on:
   pull_request:
     branches: ["main", "master"]
 jobs:
-   testes-evalidação:
+   testes-e-validação:
    #define o sistema operacional do runner(maquina virtual)
      runs-on: ubuntu-latest
 
