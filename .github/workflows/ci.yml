@@ -16,7 +16,8 @@ jobs:
     #step 1: baixa o codigo do reporsitorio para o runner
 
       - name: Baixar Código-Fonte
-        uses: actions/checkout@v4
+  uses: actions/checkout@v4
+
 
     #step 2: Configura o ambiente do Node.js
 
