@@ -1,42 +1,38 @@
 name: Pipeline de Integração Contínua (CI)
 
-# Dispara o pipeline em pushes e pull requests nas branches principais
 on:
   push:
-    branches: ["main", "master"]
+    branches:
+      - main
+      - feature/publish-docker
 
   pull_request:
-    branches: ["main", "master"]
+    branches:
+      - main
+      - feature/publish-docker
 
 jobs:
   testes-e-validacao:
-    # Define o sistema operacional do runner (máquina virtual)
     runs-on: ubuntu-latest
 
     steps:
-      # Step 1: baixa o código do repositório para o runner
       - name: Baixar Código-Fonte
         uses: actions/checkout@v4
 
-      # Step 2: configura o ambiente do Node.js
       - name: Configurar Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
           cache: 'npm'
 
-      # Step 3: instala as dependências de forma consistente com o package-lock.json
       - name: Instalar Dependências
         run: npm ci
 
-      # Step 4: análise estática com linter
       - name: Executar Linter
         run: npm run lint
 
-      # Step 5: testes unitários
       - name: Executar Testes Automatizados
         run: npm test
 
-      # Step 6: análise de segurança das dependências
       - name: Verificação de Segurança de Dependências
         run: npm audit --audit-level=high
